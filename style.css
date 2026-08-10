@@ -1,0 +1,747 @@
+/* ==========================================================================
+   MedCare - Sistem Reservasi Klinik & Manajemen Pasien
+   Dasar Pemrograman Front End - STIKOM PGRI Banyuwangi
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary: #0d9488;
+  --primary-hover: #0f766e;
+  --primary-light: #ccfbf1;
+  --secondary: #0284c7;
+  --accent: #f59e0b;
+  --danger: #ef4444;
+  --success: #10b981;
+  --dark-bg: #0f172a;
+  --card-bg: rgba(255, 255, 255, 0.92);
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-md: 0 10px 25px -5px rgba(13, 148, 136, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 35px -10px rgba(15, 23, 42, 0.15);
+  --font-main: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 50%, #f8fafc 100%);
+  color: var(--text-main);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   Header & Navigation (NavBar)
+   -------------------------------------------------------------------------- */
+.header-glass {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.navbar-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--dark-bg);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.brand-logo i {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 0.55rem;
+  border-radius: var(--radius-sm);
+  font-size: 1.2rem;
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+}
+
+.brand-logo span.tag {
+  font-size: 0.7rem;
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Tombol Hamburger Menu (Logo Garis 3 - Hanya Muncul di Mobile/Tablet) */
+.menu-toggle-btn {
+  display: none; /* Sembunyikan di PC / Desktop */
+  align-items: center;
+  gap: 0.6rem;
+  background: linear-gradient(135deg, var(--primary), #0f766e);
+  color: white;
+  border: none;
+  padding: 0.65rem 1.2rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.3);
+  transition: all 0.25s ease;
+}
+
+.menu-toggle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(13, 148, 136, 0.45);
+}
+
+.menu-toggle-btn i {
+  font-size: 1.1rem;
+}
+
+/* Nav Menu: Tampilan Horizontal di PC / Desktop */
+.nav-menu {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes dropdownSlideIn {
+  from { opacity: 0; transform: translateY(-12px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: var(--radius-md);
+  transition: all 0.25s ease;
+}
+
+.nav-link i {
+  font-size: 1rem;
+  color: var(--primary);
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary);
+  background: rgba(13, 148, 136, 0.08);
+}
+
+.nav-link.active {
+  color: white;
+  background: linear-gradient(135deg, var(--primary), #0f766e);
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);
+}
+
+.nav-link.active i {
+  color: white;
+}
+
+
+
+/* --------------------------------------------------------------------------
+   Layout Containers
+   -------------------------------------------------------------------------- */
+
+.main-wrapper {
+  max-width: 1280px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+.page-section {
+  display: none;
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.page-section.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--dark-bg);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section-title i {
+  color: var(--primary);
+}
+
+.section-subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+}
+
+/* --------------------------------------------------------------------------
+   Cards & Stats
+   -------------------------------------------------------------------------- */
+.grid-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.stat-icon.teal { background: #ccfbf1; color: #0d9488; }
+.stat-icon.blue { background: #e0f2fe; color: #0284c7; }
+.stat-icon.amber { background: #fef3c7; color: #d97706; }
+.stat-icon.green { background: #dcfce7; color: #16a34a; }
+
+.stat-info .value {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--dark-bg);
+  line-height: 1.2;
+}
+
+.stat-info .label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Form Styles & Glass Card Container
+   -------------------------------------------------------------------------- */
+.card-box {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 2rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group.full-width {
+  grid-column: span 2;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--dark-bg);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.form-group label i {
+  color: var(--primary);
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  color: var(--text-main);
+  background: white;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.15);
+}
+
+.form-control.is-invalid {
+  border-color: var(--danger);
+  background-color: #fef2f2;
+}
+
+.invalid-feedback {
+  color: var(--danger);
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: none;
+  margin-top: 0.2rem;
+}
+
+.invalid-feedback.show {
+  display: block;
+  animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+/* Slider Custom Info */
+.slider-val-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.badge-urgency {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.badge-urgency.rutin { background: #e0f2fe; color: #0284c7; }
+.badge-urgency.sedang { background: #fef3c7; color: #d97706; }
+.badge-urgency.tinggi { background: #ffedd5; color: #ea580c; }
+.badge-urgency.darurat { background: #fee2e2; color: #dc2626; }
+
+/* --------------------------------------------------------------------------
+   Buttons & Controls
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), #0f766e);
+  color: white;
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(13, 148, 136, 0.4);
+}
+
+.btn-secondary {
+  background: #f1f5f9;
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background: #e2e8f0;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  border-radius: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   Table Component
+   -------------------------------------------------------------------------- */
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.search-box {
+  position: relative;
+  min-width: 280px;
+}
+
+.search-box i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.search-box input {
+  padding-left: 2.6rem;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  text-align: left;
+  font-size: 0.92rem;
+}
+
+.custom-table th {
+  background: #f8fafc;
+  color: var(--dark-bg);
+  font-weight: 700;
+  padding: 1rem;
+  border-bottom: 2px solid var(--border-color);
+  font-family: var(--font-heading);
+}
+
+.custom-table td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+.custom-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.custom-table tbody tr:hover {
+  background-color: rgba(13, 148, 136, 0.03);
+}
+
+.badge-status {
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.badge-status.terkonfirmasi { background: #dcfce7; color: #15803d; }
+.badge-status.menunggu { background: #fef3c7; color: #b45309; }
+.badge-status.selesai { background: #e0f2fe; color: #0369a1; }
+.badge-status.batal { background: #fee2e2; color: #b91c1c; }
+
+.actions-cell {
+  display: flex;
+  gap: 0.4rem;
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+.footer-app {
+  margin-top: 4rem;
+  background: var(--dark-bg);
+  color: #94a3b8;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footer-content strong {
+  color: white;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Design Breakpoints (Mobile, Tablet, Desktop)
+   -------------------------------------------------------------------------- */
+
+/* Tablet & Smaller Devices (<= 1024px) */
+@media (max-width: 1024px) {
+  .main-wrapper {
+    margin: 1.5rem auto;
+    padding: 0 1.25rem;
+  }
+
+  .grid-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Medium Mobile & Tablet (<= 868px) - Menu Disembunyikan di Logo Garis 3 */
+@media (max-width: 868px) {
+  .navbar-container {
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  .brand-logo {
+    font-size: 1.2rem;
+  }
+
+  .nav-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Tampilkan tombol garis 3 mentok di kanan navbar */
+  .menu-toggle-btn {
+    display: inline-flex;
+    margin-left: auto;
+    padding: 0.6rem;
+    width: 42px;
+    height: 42px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .menu-toggle-btn span {
+    display: none; /* Di HP hanya ikon garis 3 untuk menghemat ruang */
+  }
+
+  /* Sembunyikan menu secara default di Mobile/Tablet */
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    right: 1.25rem;
+    width: calc(100vw - 2.5rem);
+    max-width: 320px;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.2);
+    padding: 0.75rem;
+    flex-direction: column;
+    gap: 0.4rem;
+    z-index: 2000;
+  }
+
+  .nav-menu.open {
+    display: flex !important;
+    animation: dropdownSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .nav-link {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    font-size: 0.92rem;
+    border-radius: var(--radius-sm);
+  }
+}
+
+
+
+
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.88rem;
+  }
+
+  .card-box {
+    padding: 1.35rem;
+    border-radius: var(--radius-md);
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+  }
+
+  .form-group.full-width {
+    grid-column: span 1;
+  }
+
+  .table-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-box {
+    min-width: 100%;
+  }
+
+  .filter-group {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .filter-group select {
+    flex-grow: 1;
+  }
+}
+
+/* Small Mobile Devices (<= 480px / iPhone SE / Android compact) */
+@media (max-width: 480px) {
+  .main-wrapper {
+    padding: 0 0.75rem;
+    margin: 1rem auto;
+  }
+
+  .brand-logo span.tag {
+    display: none; /* Hide badge on tiny screens for space */
+  }
+
+  .nav-link i {
+    font-size: 0.9rem;
+  }
+
+  .grid-stats {
+    grid-template-columns: 1fr; /* 1 Column stats on mobile */
+    gap: 0.85rem;
+  }
+
+  .stat-card {
+    padding: 1.1rem;
+  }
+
+  .stat-info .value {
+    font-size: 1.5rem;
+  }
+
+  .card-box {
+    padding: 1.1rem;
+  }
+
+  .form-control {
+    font-size: 16px; /* Prevents auto-zoom on iOS Safari */
+    padding: 0.65rem 0.85rem;
+  }
+
+  /* Stack form action buttons vertically on mobile */
+  form#form-reservasi > div:last-child {
+    flex-direction: column-reverse;
+  }
+
+  form#form-reservasi > div:last-child .btn {
+    width: 100%;
+  }
+
+  .slider-val-box {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .footer-app {
+    padding: 1.75rem 1rem;
+    font-size: 0.82rem;
+  }
+}
+
