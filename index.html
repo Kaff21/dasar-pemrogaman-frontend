@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MedCare - Sistem Reservasi Klinik & Manajemen Pasien berbasis jQuery dan jQuery UI. Tugas Ujian Semester Pendek Dasar Pemrograman Front End.">
+  <title>MedCare - Portal Reservasi Klinik & Manajemen Pasien</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <!-- jQuery UI CSS CDN -->
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+  <!-- Custom Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/jquery-ui-custom.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       1. HEADER & NAVIGATION BAR (NavBar - Mandatory Component 1)
+       ========================================================================== -->
+  <header class="header-glass">
+    <div class="navbar-container">
+      <a href="#section-dashboard" class="brand-logo">
+        <i class="fas fa-heartpulse"></i>
+        <div>
+          MedCare <span class="tag">Klinik Pratama</span>
+        </div>
+      </a>
+
+      <nav class="nav-wrapper">
+        <!-- Tombol Hamburger Menu (Logo Garis 3) -->
+        <button id="btn-toggle-menu" class="menu-toggle-btn" aria-label="Toggle Navigation Menu">
+          <i class="fas fa-bars"></i>
+          <span>Menu</span>
+        </button>
+
+        <ul class="nav-menu" id="main-nav-menu">
+          <li>
+            <a href="#section-dashboard" class="nav-link active" id="nav-dashboard">
+              <i class="fas fa-chart-line"></i> Dashboard Klinik
+            </a>
+          </li>
+          <li>
+            <a href="#section-reservasi" class="nav-link" id="nav-reservasi">
+              <i class="fas fa-calendar-plus"></i> Form Reservasi Pasien
+            </a>
+          </li>
+          <li>
+            <a href="#section-pasien" class="nav-link" id="nav-pasien">
+              <i class="fas fa-users-medical"></i> Data Pasien & Tabel
+            </a>
+          </li>
+          <li>
+            <a href="#section-layanan" class="nav-link" id="nav-layanan">
+              <i class="fas fa-clinic-medical"></i> Informasi Layanan & FAQ
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+
+
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================== -->
+  <main class="main-wrapper">
+
+    <!-- ----------------------------------------------------------------------
+         SECTION 1: DASHBOARD OVERVIEW
+         ---------------------------------------------------------------------- -->
+    <section id="section-dashboard" class="page-section active">
+      <div class="section-header">
+        <h1 class="section-title"><i class="fas fa-hospital-user"></i> Dashboard Sistem Klinik</h1>
+        <p class="section-subtitle">Ringkasan aktivitas pendaftaran dan antrean pasien Klinik Pratama MedCare</p>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div class="grid-stats">
+        <div class="stat-card">
+          <div class="stat-icon teal">
+            <i class="fas fa-clipboard-list"></i>
+          </div>
+          <div class="stat-info">
+            <div class="value" id="stat-total-reservasi">0</div>
+            <div class="label">Total Reservasi</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon green">
+            <i class="fas fa-check-double"></i>
+          </div>
+          <div class="stat-info">
+            <div class="value" id="stat-terkonfirmasi">0</div>
+            <div class="label">Status Terkonfirmasi</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon amber">
+            <i class="fas fa-hourglass-half"></i>
+          </div>
+          <div class="stat-info">
+            <div class="value" id="stat-menunggu">0</div>
+            <div class="label">Menunggu Verifikasi</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <i class="fas fa-user-clock"></i>
+          </div>
+          <div class="stat-info" style="width: 100%;">
+            <div class="label" style="margin-bottom: 0.3rem;">Kapasitas Antrean Harian</div>
+            <div id="progressbar-kuota" style="height: 10px;"></div>
+            <small id="kuota-label" style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.3rem; display: block;">0/15 Pasien</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Banner Quick Action Card -->
+      <div class="card-box" style="background: linear-gradient(135deg, #0f172a, #1e293b); color: white;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
+          <div>
+            <h2 style="font-family: 'Outfit'; font-size: 1.5rem; margin-bottom: 0.5rem; color: #ccfbf1;">
+              <i class="fas fa-user-plus"></i> Pendaftaran Reservasi Pasien Baru
+            </h2>
+            <p style="color: #94a3b8; font-size: 0.95rem;">Gunakan form interaktif dengan validasi real-time dan widget jQuery UI untuk mendaftarkan pasien.</p>
+          </div>
+          <a href="#section-reservasi" class="btn btn-primary nav-link" style="text-decoration: none;">
+            Buat Reservasi Sekarang <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         SECTION 2: FORM RESERVASI PASIEN (Form Input & Validasi jQuery - Mandatory Component 2 & 3)
+         ---------------------------------------------------------------------- -->
+    <section id="section-reservasi" class="page-section">
+      <div class="section-header">
+        <h1 class="section-title"><i class="fas fa-notes-medical"></i> Form Pendaftaran Reservasi Pasien</h1>
+        <p class="section-subtitle">Isi formulir berikut dengan data valid. Sistem dilengkapi validasi jQuery real-time.</p>
+      </div>
+
+      <div class="card-box">
+        <form id="form-reservasi" novalidate>
+          <div class="form-grid">
+            
+            <!-- Input 1: Nama Pasien -->
+            <div class="form-group">
+              <label for="input-nama"><i class="fas fa-user"></i> Nama Lengkap Pasien *</label>
+              <input type="text" id="input-nama" class="form-control" placeholder="Contoh: Ahmad Subagyo" title="Masukkan nama lengkap sesuai KTP/Identitas">
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- Input 2: NIK (16 Digit) -->
+            <div class="form-group">
+              <label for="input-nik"><i class="fas fa-id-card"></i> NIK (Nomor Induk Kependudukan) *</label>
+              <input type="text" id="input-nik" class="form-control" maxlength="16" placeholder="16 Digit Angka NIK KTP" title="Masukkan 16 digit nomor NIK">
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- Input 3: Nomor Telepon / WhatsApp -->
+            <div class="form-group">
+              <label for="input-phone"><i class="fas fa-phone-alt"></i> Nomor HP / WhatsApp *</label>
+              <input type="text" id="input-phone" class="form-control" placeholder="Contoh: 081234567890" title="Nomor aktif untuk konfirmasi reservasi via WhatsApp">
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- Input 4: Selectmenu Poliklinik (Bonus jQuery UI Widget 1: Select menu) -->
+            <div class="form-group">
+              <label for="select-poli"><i class="fas fa-stethoscope"></i> Poliklinik Tujuan *</label>
+              <div id="select-poli-wrapper">
+                <select id="select-poli">
+                  <option value="Poli Umum">Poli Umum (Penyakit Dalam & Konsultasi)</option>
+                  <option value="Poli Gigi">Poli Gigi & Mulut</option>
+                  <option value="Poli Anak">Poli Kesehatan Anak</option>
+                  <option value="Poli Mata">Poli Spesialis Mata</option>
+                  <option value="Poli Saraf">Poli Spesialis Saraf</option>
+                </select>
+              </div>
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- Input 5: Autocomplete Dokter Spesialis (Bonus jQuery UI Widget 2: Autocomplete) -->
+            <div class="form-group">
+              <label for="input-dokter"><i class="fas fa-user-md"></i> Cari Dokter Spesialis *</label>
+              <input type="text" id="input-dokter" class="form-control" placeholder="Ketik nama dokter (misal: dr. Andi...)" title="Gunakan pencarian otomatis untuk memilih dokter">
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- Input 6: Datepicker Tanggal Kunjungan (Bonus jQuery UI Widget 3: Datepicker) -->
+            <div class="form-group">
+              <label for="input-tanggal"><i class="fas fa-calendar-alt"></i> Tanggal Kunjungan *</label>
+              <input type="text" id="input-tanggal" class="form-control" placeholder="Pilih Tanggal (dd/mm/yyyy)" readonly title="Pilih tanggal via kalender interaktif">
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- Input 7: Slider Tingkat Urgensi Keluhan (Bonus jQuery UI Widget 4: Slider) -->
+            <div class="form-group full-width">
+              <label for="slider-urgensi"><i class="fas fa-tachometer-alt"></i> Tingkat Urgensi KeluhanPasien</label>
+              <div style="padding: 0.5rem 0;">
+                <div id="slider-urgensi"></div>
+                <input type="hidden" id="input-urgensi-hidden" value="2">
+              </div>
+              <div class="slider-val-box">
+                <span>Pilih Skala (1: Rutin s.d. 4: Darurat)</span>
+                <div>
+                  Nilai: <strong id="urgensi-val">2</strong> &nbsp;|&nbsp; Status: <span id="urgensi-badge" class="badge-urgency sedang">2 - Sedang</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Input 8: Autocomplete Catatan Keluhan Pasien -->
+            <div class="form-group full-width">
+              <label for="input-keluhan"><i class="fas fa-comment-medical"></i> Catatan Keluhan / Gejala Awal</label>
+              <input type="text" id="input-keluhan" class="form-control" placeholder="Contoh: Demam tinggi 3 hari, pusing, batuk berkepanjangan..." title="Ketik gejala awal atau pilih dari opsi autocomplete">
+            </div>
+
+          </div>
+
+          <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: flex-end;">
+            <button type="button" class="btn btn-secondary" onclick="resetReservationForm()">
+              <i class="fas fa-undo"></i> Reset Form
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-paper-plane"></i> Simpan & Daftarkan Reservasi
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         SECTION 3: DATA PASIEN & TABEL (Tabel Data - Mandatory Component 4)
+         ---------------------------------------------------------------------- -->
+    <section id="section-pasien" class="page-section">
+      <div class="section-header">
+        <h1 class="section-title"><i class="fas fa-table"></i> Data Tabel Reservasi Pasien</h1>
+        <p class="section-subtitle">Daftar reservasi pasien terdaftar dengan pencarian pencarian dan filter status interaktif</p>
+      </div>
+
+      <div class="card-box">
+        <!-- Table Control Toolbar -->
+        <div class="table-toolbar">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-tabel" class="form-control" placeholder="Cari nama, NIK, poli, atau ID...">
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-status" style="font-weight: 600; font-size: 0.9rem;"><i class="fas fa-filter"></i> Filter Status:</label>
+            <select id="filter-status" class="form-control" style="width: 180px;">
+              <option value="all">Semua Status</option>
+              <option value="Terkonfirmasi">Terkonfirmasi</option>
+              <option value="Menunggu">Menunggu</option>
+              <option value="Selesai">Selesai</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Interactive Table Container -->
+        <div class="table-responsive">
+          <table class="custom-table" id="tabel-pasien">
+            <thead>
+              <tr>
+                <th>ID Kode</th>
+                <th>Nama Pasien & NIK</th>
+                <th>Poliklinik</th>
+                <th>Dokter Tujuan</th>
+                <th>Tgl Kunjungan</th>
+                <th>Urgensi</th>
+                <th>Status</th>
+                <th>Aksi DOM</th>
+              </tr>
+            </thead>
+            <tbody id="tabel-pasien-body">
+              <!-- Rows will be injected dynamically via jQuery DOM manipulation -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         SECTION 4: LAYANAN & FAQ (Bonus Widgets: Accordion, Tabs, Tooltip)
+         ---------------------------------------------------------------------- -->
+    <section id="section-layanan" class="page-section">
+      <div class="section-header">
+        <h1 class="section-title"><i class="fas fa-info-circle"></i> Informasi Layanan & FAQ Klinik</h1>
+        <p class="section-subtitle">Panduan kesehatan & jawaban pertanyaan umum menggunakan widget Accordion dan Tabs jQuery UI</p>
+      </div>
+
+      <!-- Bonus jQuery UI Widget 5: Tabs -->
+      <div id="tabs-layanan" style="margin-bottom: 2rem;">
+        <ul>
+          <li><a href="#tab-1"><i class="fas fa-stethoscope"></i> Poliklinik Spesialis</a></li>
+          <li><a href="#tab-2"><i class="fas fa-file-invoice-dollar"></i> Alur Pendaftaran & BPJS</a></li>
+          <li><a href="#tab-3"><i class="fas fa-clock"></i> Jam Operasional</a></li>
+        </ul>
+        <div id="tab-1">
+          <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 0.5rem;">Fasilitas Poliklinik Lengkap</h3>
+          <p>Klinik Pratama MedCare menyediakan layanan medis rawat jalan dengan dokter berpengalaman di bidang Poli Umum, Poli Gigi, Poli Anak, Poli Mata, dan Poli Saraf.</p>
+        </div>
+        <div id="tab-2">
+          <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 0.5rem;">Persyaratan Berobat & Akses JKN BPJS</h3>
+          <p>Menerima pasien Umum dan pengguna BPJS Kesehatan. Harap membawa KTP asli dan kartu BPJS pada saat kedatangan konfirmasi reservasi di kasir.</p>
+        </div>
+        <div id="tab-3">
+          <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 0.5rem;">Jadwal Buka Pelayanan</h3>
+          <p>Senin – Sabtu: 07.00 - 21.00 WIB | Minggu & Hari Libur Nasional: Pelayanan IGD 24 Jam.</p>
+        </div>
+      </div>
+
+      <!-- Bonus jQuery UI Widget 6: Accordion FAQ -->
+      <div class="card-box">
+        <h2 style="font-family: 'Outfit'; font-size: 1.3rem; margin-bottom: 1rem; color: var(--dark-bg);">
+          <i class="fas fa-question-circle" style="color: var(--primary);"></i> Pertanyaan Sering Diajukan (FAQ Pasien)
+        </h2>
+
+        <div id="accordion-faq">
+          <h3><i class="fas fa-chevron-right" style="font-size: 0.8rem; margin-right: 0.5rem;"></i> Bagaimana cara membatalkan atau mengubah jadwal reservasi?</h3>
+          <div>
+            <p>Anda dapat mengklik tombol <strong>Status Badge</strong> pada Tabel Data Pasien untuk memperbarui status reservasi, atau menghubungi layanan customer service via WhatsApp resmi klinik.</p>
+          </div>
+
+          <h3><i class="fas fa-chevron-right" style="font-size: 0.8rem; margin-right: 0.5rem;"></i> Berapa lama masa berlaku kode reservasi pasien?</h3>
+          <div>
+            <p>Kode reservasi berlaku hingga jam tutup operasional poliklinik pada tanggal kunjungan yang dipilih.</p>
+          </div>
+
+          <h3><i class="fas fa-chevron-right" style="font-size: 0.8rem; margin-right: 0.5rem;"></i> Apakah pendaftaran online membutuhkan biaya pendaftaran?</h3>
+          <div>
+            <p>Pendaftaran secara online melalui sistem MedCare ini 100% Bebas Biaya (Gratis). Pembayaran medis hanya dilakukan saat pemeriksaan di klinik.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       MODAL DIALOG CONTAINERS (Bonus jQuery UI Widget 7: Dialog Modal)
+       ========================================================================== -->
+  
+  <!-- Dialog 1: Popup Detail Pasien -->
+  <div id="dialog-detail" title="Detail Data Reservasi Pasien">
+    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+      <div style="background: #f8fafc; padding: 0.8rem; border-radius: 8px; border-left: 4px solid #0d9488;">
+        <strong id="detail-id" style="color: var(--primary); font-size: 1.1rem;">-</strong><br>
+        <span id="detail-nama" style="font-weight: 700; font-size: 1.1rem; color: var(--dark-bg);">-</span>
+      </div>
+
+      <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+        <tr>
+          <td style="padding: 0.3rem 0; color: var(--text-muted); width: 40%;"><strong>NIK:</strong></td>
+          <td id="detail-nik" style="font-weight: 600;">-</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.3rem 0; color: var(--text-muted);"><strong>No. Telepon:</strong></td>
+          <td id="detail-phone">-</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.3rem 0; color: var(--text-muted);"><strong>Poliklinik:</strong></td>
+          <td id="detail-poli" style="font-weight: 600;">-</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.3rem 0; color: var(--text-muted);"><strong>Dokter Spesialis:</strong></td>
+          <td id="detail-dokter">-</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.3rem 0; color: var(--text-muted);"><strong>Tanggal Kunjungan:</strong></td>
+          <td id="detail-tanggal">-</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.3rem 0; color: var(--text-muted);"><strong>Skala Urgensi:</strong></td>
+          <td id="detail-urgensi">-</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.3rem 0; color: var(--text-muted);"><strong>Status Reservasi:</strong></td>
+          <td id="detail-status" style="font-weight: 700; color: var(--primary);">-</td>
+        </tr>
+      </table>
+
+      <div style="margin-top: 0.5rem; background: #fffbe0; padding: 0.75rem; border-radius: 8px; border: 1px solid #fef08a;">
+        <strong style="color: #854d0e; font-size: 0.85rem;"><i class="fas fa-notes-medical"></i> Catatan Keluhan Pasien:</strong>
+        <p id="detail-catatan" style="margin-top: 0.2rem; font-size: 0.88rem; color: #713f12;">-</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialog 2: Konfirmasi Hapus Data -->
+  <div id="dialog-confirm-delete" title="Konfirmasi Hapus Data">
+    <p><i class="fas fa-exclamation-triangle" style="color: var(--danger); font-size: 1.5rem; vertical-align: middle; margin-right: 0.5rem;"></i> Apakah Anda yakin ingin menghapus data reservasi pasien ini dari sistem?</p>
+  </div>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="footer-app">
+    <div class="footer-content">
+      <p>© 2026 <strong>MedCare Sistem Reservasi Klinik</strong> - Ujian Semester Pendek T.A 2025/2026</p>
+      <p>Mata Kuliah: <strong>Dasar Pemrograman Front End</strong> | Dosen Pengampu: <strong>Abdul Haris, M.Kom</strong></p>
+      <p><small style="color: #64748b;">STIKOM PGRI BANYUWANGI - S1 TEKNIK INFORMATIKA</small></p>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       SCRIPTS (jQuery 3.7.1 & jQuery UI 1.13.2 CDN + Application Scripts)
+       ========================================================================== -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+  <!-- Custom Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
